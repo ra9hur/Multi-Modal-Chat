@@ -7,9 +7,9 @@ This project is all about integrating different AI models to handle audio, image
 Audio-to-text yet to be implemented, is work in progress.
 
 <!-- https://byby.dev/md-image-size -->
-<center>
+<p align="center">
 <img src="https://github.com/ra9hur/Multi-Modal-Chat/assets/17127066/d19fa767-582b-4986-aae3-a6ccc6894e9d" alt="image" width="500" height="auto">
-</center>
+</p>
 
 <br>
 
