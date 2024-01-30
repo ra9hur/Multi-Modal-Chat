@@ -1,7 +1,7 @@
 from prompt_templates import memory_prompt_template
 from langchain.chains import LLMChain
 from langchain.chains.retrieval_qa.base import RetrievalQA
-from langchain_community.embeddings import HuggingFaceInstructEmbeddings
+from langchain_community.embeddings import HuggingFaceInstructEmbeddings, HuggingFaceEmbeddings, HuggingFaceBgeEmbeddings
 from langchain.memory import ConversationBufferWindowMemory
 from langchain.prompts import PromptTemplate
 from langchain_community.llms import CTransformers
@@ -40,8 +40,11 @@ def create_chat_memory(chat_history):
 
 def create_embeddings(embeddings_path = config['embeddings_path']):
 
-    embeddings = HuggingFaceInstructEmbeddings(model_name=embeddings_path)
-    
+    embeddings = HuggingFaceBgeEmbeddings(model_name=embeddings_path)
+    #embeddings = HuggingFaceInstructEmbeddings(model_name=embeddings_path)
+    #embeddings = HuggingFaceEmbeddings(model_name=embeddings_path)
+
+
     return embeddings
 
 

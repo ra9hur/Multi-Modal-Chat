@@ -10,6 +10,7 @@ from utils import save_chat_history_json, load_chat_history_json, get_timestamp
 from image_handler import handle_image
 from pdf_handler import add_documents_to_db
 from html_templates import get_bot_template, get_user_template, css
+from audio_handler import transcribe_audio
 
 
 with open("config.yaml", 'r') as f:
@@ -86,6 +87,7 @@ def main():
     with send_button_col:
         send_button = st.button("Send", key="send_button")
 
+    uploaded_audio = st.sidebar.file_uploader("Upload an audio file", type=["wav", "mp3"])
 
     uploaded_image = st.sidebar.file_uploader("Upload an image file", type=["jpg", "jpeg", "png"])
 
@@ -95,6 +97,23 @@ def main():
     if uploaded_pdf:
         with st.spinner("Processing pdf..."):
             add_documents_to_db(uploaded_pdf)
+
+    llm_chain = load_chain(chat_history)
+
+    if uploaded_audio:
+        with st.spinner("Processing audio..."):
+            transcribed_audio = transcribe_audio(uploaded_audio.getvalue())
+        print(transcribed_audio)
+        with st.spinner("Wait for AI response ..."):
+            llm_chain.run("Summarize this text: " + transcribed_audio)
+
+    if voice_recording:
+        with st.spinner("Processing voice recording..."):
+            # voice recording is a dictionary, hence voice_recording['bytes']
+            transcribed_audio = transcribe_audio(voice_recording['bytes'])
+        print(transcribed_audio)
+        with st.spinner("Wait for AI response ..."):
+            llm_chain.run(transcribed_audio)
 
     if send_button or st.session_state.send_input:
         if uploaded_image:
@@ -108,8 +127,6 @@ def main():
                 chat_history.add_ai_message(llm_response)
         
         if st.session_state.user_question != "":
-
-            llm_chain = load_chain(chat_history)
 
             # https://bijukunjummen.medium.com/chat-application-using-streamlit-and-text-bison-05024f939827
             # https://github.com/langchain-ai/streamlit-agent/blob/main/streamlit_agent/basic_memory.py
