@@ -4,7 +4,6 @@ Imagine a digital assistant that seamlessly works with text, images, PDFs, sound
 
 This project is all about integrating different AI models to handle audio, images, and PDFs in a single chat interface. A huge shout to [Leon Sander](https://www.youtube.com/@leonsaiagency) for holding an YouTube session that made things a lot simpler to understand and implement.
 
-Audio-to-text yet to be implemented, is work in progress.
 
 <!-- https://byby.dev/md-image-size -->
 <p align="center">
